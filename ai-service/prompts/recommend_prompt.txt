@@ -1,0 +1,20 @@
+You are a Privacy Impact Assessment expert.
+
+Based on the system description below, generate exactly 3 privacy recommendations.
+
+Input:
+{user_input}
+
+Return ONLY valid JSON as an array:
+[
+  {
+    "action_type": "...",
+    "description": "...",
+    "priority": "High | Medium | Low"
+  }
+]
+
+Rules:
+- Exactly 3 recommendations
+- Be practical and specific
+- No explanation outside JSON
