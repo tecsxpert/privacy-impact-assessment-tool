@@ -5,7 +5,8 @@ import { useAuth } from '../context/AuthContext';
 export default function ProtectedRoute({ children }) {
   const { user } = useAuth();
 
-  if (!user) {
+  // If no token found redirect to login
+  if (!user || !user.token) {
     return <Navigate to="/login" replace />;
   }
 
