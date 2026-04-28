@@ -9,15 +9,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-describe_bp = Blueprint('describe', __name__)
+generate_report_bp = Blueprint('generate_report', __name__)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
 redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
 
-@describe_bp.route('/describe', methods=['POST'])
-def describe():
+@generate_report_bp.route('/generate-report', methods=['POST'])
+def generate_report():
     data = request.get_json()
 
     # Validate Input
@@ -25,13 +25,13 @@ def describe():
         return jsonify({"error": "Missing 'input' field in request body."}), 400
 
     user_input = data["input"]
-    input_str = str(user_input)
+    input_str = json.dumps(user_input) if isinstance(user_input, dict) else str(user_input)
 
-    cache_key = f"ai_cache:describe:{hashlib.sha256(input_str.encode('utf-8')).hexdigest()}"
+    cache_key = f"ai_cache:generate_report:{hashlib.sha256(input_str.encode('utf-8')).hexdigest()}"
     try:
         cached_resp = redis_client.get(cache_key)
         if cached_resp:
-            print("Serving describe from cache")
+            print("Serving generate-report from cache")
             return jsonify(json.loads(cached_resp)), 200
     except redis.RedisError as e:
         print(f"Redis cache error: {e}")
@@ -39,12 +39,14 @@ def describe():
     # Load Prompt
     try:
         base_dir = os.path.dirname(os.path.dirname(__file__))
-        with open(os.path.join(base_dir, "prompts", "describe_prompt.txt"), "r") as f:
+        with open(os.path.join(base_dir, "prompts", "generate_report_prompt.txt"), "r") as f:
             prompt_template = f.read()
     except Exception as e:
         return jsonify({"error": f"Failed to load prompt template: {str(e)}"}), 500
 
-    prompt = prompt_template.replace("{user_input}", str(user_input))
+    # Handle string or dict input gracefully
+    input_str = json.dumps(user_input) if isinstance(user_input, dict) else str(user_input)
+    prompt = prompt_template.replace("{user_input}", input_str)
 
     if not GROQ_API_KEY:
         return handle_fallback("Missing GROQ_API_KEY environment variable.")
@@ -62,7 +64,7 @@ def describe():
     try:
         response = requests.post(
             "https://api.groq.com/openai/v1/chat/completions",
-            headers=headers, json=payload, timeout=10
+            headers=headers, json=payload, timeout=15
         )
         response.raise_for_status()
 
@@ -71,15 +73,18 @@ def describe():
         if clean.lower().startswith("json"):
             clean = clean[4:].strip()
 
-        assessment_data = json.loads(clean)
-        assessment_data["generated_at"] = datetime.now(timezone.utc).isoformat()
+        report_data = json.loads(clean)
+        
+        # Add metadata
+        report_data["generated_at"] = datetime.now(timezone.utc).isoformat()
+        report_data["status"] = "success"
         
         try:
-            redis_client.setex(cache_key, 900, json.dumps(assessment_data))
+            redis_client.setex(cache_key, 900, json.dumps(report_data))
         except redis.RedisError as e:
             print(f"Redis cache set error: {e}")
-            
-        return jsonify(assessment_data), 200
+        
+        return jsonify(report_data), 200
 
     except requests.exceptions.RequestException as e:
         return handle_fallback(f"Groq API connection failure: {str(e)}")
@@ -90,12 +95,14 @@ def describe():
 
 
 def handle_fallback(error_message):
-    print(f"Fallback triggered: {error_message}")
+    print(f"Fallback triggered for report generation: {error_message}")
     return jsonify({
         "is_fallback": True,
-        "summary": "AI Assessment temporarily unavailable. Please review manually.",
-        "data_collected": ["Unknown"],
-        "privacy_risks": ["Unable to determine risk automatically."],
-        "risk_level": "Medium",
-        "generated_at": datetime.now(timezone.utc).isoformat()
+        "title": "Privacy Impact Assessment Report (Fallback)",
+        "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+        "overview": "Fallback report generated due to service interruption.",
+        "key_items": ["Review data types manually", "Verify retention policies"],
+        "recommendations": ["Ensure compliance with local privacy laws", "Conduct manual risk assessment"],
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "status": "partial_success"
     }), 200

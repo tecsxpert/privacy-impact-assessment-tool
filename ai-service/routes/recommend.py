@@ -1,6 +1,8 @@
 import os
 import json
 import requests
+import hashlib
+import redis
 from flask import Blueprint, request, jsonify
 from dotenv import load_dotenv
 
@@ -8,6 +10,9 @@ load_dotenv()
 
 recommend_bp = Blueprint('recommend', __name__)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
+
+redis_client = redis.from_url(REDIS_URL, decode_responses=True)
 
 
 @recommend_bp.route('/recommend', methods=['POST'])
@@ -19,6 +24,16 @@ def recommend():
         return jsonify({"error": "Missing 'input' field in request body."}), 400
 
     user_input = data["input"]
+    input_str = str(user_input)
+
+    cache_key = f"ai_cache:recommend:{hashlib.sha256(input_str.encode('utf-8')).hexdigest()}"
+    try:
+        cached_resp = redis_client.get(cache_key)
+        if cached_resp:
+            print("Serving recommend from cache")
+            return jsonify(json.loads(cached_resp)), 200
+    except redis.RedisError as e:
+        print(f"Redis cache error: {e}")
 
     # Load Prompt
     try:
@@ -56,6 +71,12 @@ def recommend():
             clean = clean[4:].strip()
 
         recommendations = json.loads(clean)
+        
+        try:
+            redis_client.setex(cache_key, 900, json.dumps(recommendations))
+        except redis.RedisError as e:
+            print(f"Redis cache set error: {e}")
+            
         return jsonify(recommendations), 200
 
     except requests.exceptions.RequestException as e:
