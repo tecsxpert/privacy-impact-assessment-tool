@@ -16,8 +16,18 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
 
+            .headers(headers -> headers
+                .xssProtection(xss -> xss.headerValue(org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED_MODE_BLOCK))
+                .contentSecurityPolicy(csp -> csp.policyDirectives("default-src 'self'; frame-ancestors 'none'; form-action 'self'"))
+                .frameOptions(frame -> frame.deny())
+                .httpStrictTransportSecurity(hsts -> hsts.includeSubDomains(true).maxAgeInSeconds(31536000))
+                .contentTypeOptions(org.springframework.security.config.Customizer.withDefaults())
+            )
+
+            .sessionManagement(session -> session.sessionCreationPolicy(org.springframework.security.config.http.SessionCreationPolicy.STATELESS))
+
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/assessments/**").permitAll()
+                .requestMatchers("/api/assessments/**", "/assessments/**").permitAll()
                 .anyRequest().authenticated()
             );
 

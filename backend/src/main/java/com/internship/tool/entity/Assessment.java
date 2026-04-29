@@ -23,6 +23,12 @@ public class Assessment {
     @Column(nullable = false)
     private String status;
 
+    @Column(name = "risk_level")
+    private String riskLevel;
+
+    @Column(name = "ai_recommendations", columnDefinition = "TEXT")
+    private String aiRecommendations;
+
     @CreatedDate
     @Column(updatable = false)
     private LocalDateTime createdAt;
@@ -62,6 +68,22 @@ public class Assessment {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getRiskLevel() {
+        return riskLevel;
+    }
+
+    public void setRiskLevel(String riskLevel) {
+        this.riskLevel = riskLevel;
+    }
+
+    public String getAiRecommendations() {
+        return aiRecommendations;
+    }
+
+    public void setAiRecommendations(String aiRecommendations) {
+        this.aiRecommendations = aiRecommendations;
     }
 
     public LocalDateTime getCreatedAt() {

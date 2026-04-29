@@ -21,7 +21,17 @@ public class AssessmentController {
         this.assessmentService = assessmentService;
     }
 
+    // ── Java Developer 1 Endpoints ──────────────────────────
+
+    @PostMapping
+    public ResponseEntity<AssessmentResponse> create(
+            @Valid @RequestBody CreateAssessmentRequest request) {
+        AssessmentResponse response = assessmentService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
     // ── Java Developer 2 Endpoints ──────────────────────────
+
 
     // PUT /{id} — Update assessment
     @PutMapping("/{id}")
