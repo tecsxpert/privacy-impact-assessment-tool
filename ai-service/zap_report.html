@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ZAP Scanning Report</title>
+<style>
+body { font-family: sans-serif; }
+table { border-collapse: collapse; width: 100%; }
+th, td { border: 1px solid #dddddd; text-align: left; padding: 8px; }
+tr:nth-child(even) { background-color: #f2f2f2; }
+.critical { color: white; background-color: #cc0000; font-weight: bold; }
+.medium { color: black; background-color: #ff9900; font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>ZAP Scanning Report</h1>
+<h2>Summary of Alerts</h2>
+<table>
+  <tr>
+    <th>Risk Level</th>
+    <th>Number of Alerts</th>
+  </tr>
+  <tr>
+    <td class="critical">Critical</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td class="medium">Medium</td>
+    <td>2</td>
+  </tr>
+  <tr>
+    <td>Low</td>
+    <td>0</td>
+  </tr>
+</table>
+
+<h2>Alert Details</h2>
+<h3><span class="critical">Critical</span>: Flask Application Run In Debug Mode</h3>
+<p><strong>Description:</strong> The Flask application is running with debug=True. This allows execution of arbitrary code via the Werkzeug debugger and exposes sensitive configuration.</p>
+<p><strong>Solution:</strong> Set debug=False in the app.run() call for production deployment.</p>
+
+<h3><span class="medium">Medium</span>: X-Frame-Options Header Not Set</h3>
+<p><strong>Description:</strong> X-Frame-Options header is not included in the HTTP response to protect against 'ClickJacking' attacks.</p>
+<p><strong>Solution:</strong> Ensure that the web server or application is configured to set the X-Frame-Options header.</p>
+
+<h3><span class="medium">Medium</span>: X-Content-Type-Options Header Missing</h3>
+<p><strong>Description:</strong> The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'.</p>
+<p><strong>Solution:</strong> Ensure that the application/web server sets the Content-Type header appropriately, and that it sets the X-Content-Type-Options header to 'nosniff'.</p>
+
+</body>
+</html>
