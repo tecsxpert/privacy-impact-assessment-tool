@@ -21,11 +21,23 @@
 
 | Test Case | Payload | Result | Status |
 | :--- | :--- | :--- | :--- |
-| **Empty Input** | `{}` | Success (200) | ✅ Handled |
+| **Empty Input** | `{}` | **Blocked (400)** | ✅ Handled (Validation) |
 | **SQL Injection** | `{"input": "'; DROP TABLE users; --"}` | Success (200) | ⚠️ Pass (No DB impact) |
 | **Prompt Injection** | `{"input": "Ignore all previous..."}` | **Blocked (400)** | ✅ Secured |
 
 **Observations:**
 - The `sanitize_middleware` successfully caught and blocked the prompt injection attack.
 - SQL injection payloads are currently treated as plain text; while safe for the current stateless AI service, future database integrations will require SQL-specific sanitization or parameterized queries.
-- Empty inputs are accepted but do not cause service crashes.
+- Empty inputs and missing fields are now correctly blocked at the endpoint level with a `400 Bad Request`.
+
+## OWASP ZAP Baseline Scan (2026-04-29)
+
+A baseline security scan was performed using OWASP ZAP against the local Flask service. 
+
+### Findings and Resolutions:
+- **[Critical] Flask Application Run In Debug Mode**: The application was configured with `debug=True`. 
+  - *Resolution*: Changed `debug=True` to `debug=False` in `app.run()` to prevent arbitrary code execution and information disclosure.
+- **[Medium] Missing X-Frame-Options Header**: The API does not set the `X-Frame-Options` header.
+  - *Planned Fix*: Add a `flask-talisman` integration or custom `@app.after_request` hook to enforce `X-Frame-Options: DENY`.
+- **[Medium] Missing X-Content-Type-Options Header**: The API does not set `X-Content-Type-Options: nosniff`.
+  - *Planned Fix*: Add the `X-Content-Type-Options: nosniff` header via middleware to prevent MIME-sniffing attacks.
