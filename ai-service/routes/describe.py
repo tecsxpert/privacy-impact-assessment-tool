@@ -5,6 +5,7 @@ import hashlib
 import redis
 from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify
+from services.vector_store import vector_store
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,7 +14,7 @@ describe_bp = Blueprint('describe', __name__)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
-redis_client = redis.from_url(REDIS_URL, decode_responses=True)
+redis_client = redis.from_url(REDIS_URL, decode_responses=True, socket_timeout=0.1, socket_connect_timeout=0.1)
 
 
 @describe_bp.route('/describe', methods=['POST'])
@@ -44,14 +45,24 @@ def describe():
     except Exception as e:
         return jsonify({"error": f"Failed to load prompt template: {str(e)}"}), 500
 
-    prompt = prompt_template.replace("{user_input}", str(user_input))
+    # RAG: Fetch relevant domain knowledge
+    try:
+        results = vector_store.query(input_str, n_results=2)
+        context = "\n".join(results['documents'][0]) if results['documents'] else ""
+    except Exception as e:
+        print(f"Vector store query failed: {e}")
+        context = ""
+
+    prompt = prompt_template.replace("{user_input}", input_str)
+    if context:
+        prompt = f"Context from privacy regulations:\n{context}\n\nTask: {prompt}"
 
     if not GROQ_API_KEY:
         return handle_fallback("Missing GROQ_API_KEY environment variable.")
 
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     payload = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "llama-3.1-8b-instant",
         "messages": [
             {"role": "system", "content": "You are a helpful API that returns strictly valid JSON."},
             {"role": "user", "content": prompt}
@@ -90,12 +101,12 @@ def describe():
 
 
 def handle_fallback(error_message):
-    print(f"Fallback triggered: {error_message}")
+    print(f"Fallback triggered for describe: {error_message}")
     return jsonify({
         "is_fallback": True,
         "summary": "AI Assessment temporarily unavailable. Please review manually.",
-        "data_collected": ["Unknown"],
-        "privacy_risks": ["Unable to determine risk automatically."],
+        "data_collected": ["Unable to extract automatically"],
+        "privacy_risks": ["Manual risk assessment required"],
         "risk_level": "Medium",
         "generated_at": datetime.now(timezone.utc).isoformat()
     }), 200

@@ -1,0 +1,562 @@
+[
+  {
+    "id": 1,
+    "input": "A smart doorbell that uses facial recognition to identify visitors and stores videos in the cloud.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:32:57.003151+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 370.07
+  },
+  {
+    "id": 2,
+    "input": "An employee monitoring system that tracks keystrokes and active hours for remote workers.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 249.8
+  },
+  {
+    "id": 3,
+    "input": "A healthcare app that shares patient data with insurance companies for premium calculations.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:32:57.490481+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 238.06
+  },
+  {
+    "id": 4,
+    "input": "A loyalty program that tracks customer purchases and sells anonymized data to third-party advertisers.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:32:57.741676+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 250.83
+  },
+  {
+    "id": 5,
+    "input": "A children's educational game that collects voice recordings for 'AI-powered' feedback.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 252.84
+  },
+  {
+    "id": 6,
+    "input": "A ride-sharing app that requires continuous background location access for 'safety features'.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:32:58.267306+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 273.09
+  },
+  {
+    "id": 7,
+    "input": "A web-based recruitment tool that uses AI to screen resumes and rank candidates based on LinkedIn profiles.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:32:58.511095+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 243.2
+  },
+  {
+    "id": 8,
+    "input": "A financial app that links to user bank accounts to provide budgeting advice via Plaid.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 271.26
+  },
+  {
+    "id": 9,
+    "input": "A public transit app that uses Bluetooth beacons to track passenger movement across the city.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:32:59.020711+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 238.59
+  },
+  {
+    "id": 10,
+    "input": "A smart thermostat that shares energy usage data with utility companies to optimize the grid.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:32:59.270947+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 249.98
+  },
+  {
+    "id": 11,
+    "input": "A drone-based delivery service that captures high-resolution imagery of residential areas.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 247.91
+  },
+  {
+    "id": 12,
+    "input": "A social media platform that uses 'emotional analysis' on user posts to suggest mood-based products.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:32:59.766381+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 247.64
+  },
+  {
+    "id": 13,
+    "input": "An e-commerce site that uses browser fingerprinting to track users across multiple devices.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:33:00.035730+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 269.81
+  },
+  {
+    "id": 14,
+    "input": "A workplace wellness app that collects DNA data to provide personalized nutrition plans.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 259.36
+  },
+  {
+    "id": 15,
+    "input": "A smart city project using license plate recognition cameras to monitor traffic flow.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:33:00.542075+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 245.99
+  },
+  {
+    "id": 16,
+    "input": "A dating app that uses genetic compatibility matching based on uploaded health reports.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:33:00.796443+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 255.23
+  },
+  {
+    "id": 17,
+    "input": "A grocery store app that uses in-store Wi-Fi tracking to analyze customer shopping paths.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 243.29
+  },
+  {
+    "id": 18,
+    "input": "A cloud storage service that scans user files for 'malicious content' and reports to law enforcement.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:33:01.283342+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 243.58
+  },
+  {
+    "id": 19,
+    "input": "A virtual reality game that collects eye-tracking and biometric data for 'immersion' improvement.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:33:01.533676+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 249.5
+  },
+  {
+    "id": 20,
+    "input": "A smart mattress that monitors sleep patterns and shares data with sleep clinics.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 250.98
+  },
+  {
+    "id": 21,
+    "input": "A connected car system that monitors driving behavior and reports to insurance for discounts.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:33:02.022656+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 238.0
+  },
+  {
+    "id": 22,
+    "input": "A high-school attendance system using fingerprint scanners for students.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:33:02.271613+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 248.32
+  },
+  {
+    "id": 23,
+    "input": "A credit scoring system that uses social media activity to determine loan eligibility.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 248.16
+  },
+  {
+    "id": 24,
+    "input": "A smart watch for elderly care that detects falls and automatically calls emergency contacts.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:33:02.765560+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 246.23
+  },
+  {
+    "id": 25,
+    "input": "A mobile banking app that uses 'behavioral biometrics' (typing speed, tilt) for authentication.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:33:03.018967+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 252.59
+  },
+  {
+    "id": 26,
+    "input": "A video conferencing tool that records 'engagement scores' for participants based on facial expressions.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 247.15
+  },
+  {
+    "id": 27,
+    "input": "A fitness tracker that shares user 'step goals' on a public leaderboard by default.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:33:03.510600+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 244.97
+  },
+  {
+    "id": 28,
+    "input": "A subscription service that uses 'dark patterns' to make it difficult for users to delete their data.",
+    "endpoint": "/describe",
+    "output": {
+      "data_collected": [
+        "Unable to extract automatically"
+      ],
+      "generated_at": "2026-04-30T16:33:03.759384+00:00",
+      "is_fallback": true,
+      "privacy_risks": [
+        "Manual risk assessment required"
+      ],
+      "risk_level": "Medium",
+      "summary": "AI Assessment temporarily unavailable. Please review manually."
+    },
+    "time_ms": 249.68
+  },
+  {
+    "id": 29,
+    "input": "An AI-powered legal assistant that stores client case files in a shared cloud environment.",
+    "endpoint": "/recommend",
+    "output": [
+      {
+        "action_type": "Manual Review Required",
+        "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+        "is_fallback": true,
+        "priority": "High"
+      }
+    ],
+    "time_ms": 264.95
+  },
+  {
+    "id": 30,
+    "input": "A smart fridge that tracks food expiration and automatically orders replacements from Amazon.",
+    "endpoint": "/generate-report",
+    "output": {
+      "generated_at": "2026-04-30T16:33:04.272092+00:00",
+      "is_fallback": true,
+      "key_items": [
+        "Review data types manually",
+        "Verify retention policies",
+        "Check encryption status"
+      ],
+      "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+      "recommendations": [
+        "Ensure compliance with local privacy laws",
+        "Conduct manual risk assessment",
+        "Verify data residency"
+      ],
+      "status": "fallback",
+      "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+      "title": "Privacy Impact Assessment Report (Fallback)"
+    },
+    "time_ms": 246.85
+  }
+]

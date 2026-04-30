@@ -10,6 +10,7 @@ from routes.describe import describe_bp
 from routes.recommend import recommend_bp
 from routes.generate_report import generate_report_bp
 from routes.health import health_bp
+from services.embeddings_service import embeddings_service
 
 app = Flask(__name__)
 
@@ -24,6 +25,10 @@ app.register_blueprint(describe_bp)
 app.register_blueprint(recommend_bp)
 app.register_blueprint(generate_report_bp)
 app.register_blueprint(health_bp)
+
+# Pre-load Model at Startup
+with app.app_context():
+    embeddings_service.preload()
 
 # Rate Limiter (Day 3)
 limiter = Limiter(
@@ -63,8 +68,10 @@ def after_request(response):
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['X-XSS-Protection'] = '1; mode=block'
-    response.headers['Content-Security-Policy'] = "default-src 'self'"
-    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'none'; object-src 'none';"
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains; preload'
+    response.headers['Referrer-Policy'] = 'no-referrer'
+    response.headers['Permissions-Policy'] = 'geolocation=(), microphone=(), camera=()'
     return response
 
 @app.route('/')

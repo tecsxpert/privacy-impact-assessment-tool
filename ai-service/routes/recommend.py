@@ -4,6 +4,7 @@ import requests
 import hashlib
 import redis
 from flask import Blueprint, request, jsonify
+from services.vector_store import vector_store
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -12,7 +13,7 @@ recommend_bp = Blueprint('recommend', __name__)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
-redis_client = redis.from_url(REDIS_URL, decode_responses=True)
+redis_client = redis.from_url(REDIS_URL, decode_responses=True, socket_timeout=0.1, socket_connect_timeout=0.1)
 
 
 @recommend_bp.route('/recommend', methods=['POST'])
@@ -43,14 +44,24 @@ def recommend():
     except Exception as e:
         return jsonify({"error": f"Failed to load prompt template: {str(e)}"}), 500
 
-    prompt = prompt_template.replace("{user_input}", str(user_input))
+    # RAG: Fetch relevant domain knowledge
+    try:
+        results = vector_store.query(input_str, n_results=2)
+        context = "\n".join(results['documents'][0]) if results['documents'] else ""
+    except Exception as e:
+        print(f"Vector store query failed: {e}")
+        context = ""
+
+    prompt = prompt_template.replace("{user_input}", input_str)
+    if context:
+        prompt = f"Context from privacy regulations:\n{context}\n\nTask: {prompt}"
 
     if not GROQ_API_KEY:
         return handle_fallback("Missing GROQ_API_KEY environment variable.")
 
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     payload = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "llama-3.1-8b-instant",
         "messages": [
             {"role": "system", "content": "You are a helpful API that returns strictly valid JSON arrays."},
             {"role": "user", "content": prompt}
@@ -88,10 +99,10 @@ def recommend():
 
 
 def handle_fallback(error_message):
-    print(f"Fallback triggered: {error_message}")
+    print(f"Fallback triggered for recommend: {error_message}")
     return jsonify([{
+        "is_fallback": True,
         "action_type": "Manual Review Required",
         "description": "AI recommendation engine is temporarily offline. Please assess manually.",
-        "priority": "High",
-        "is_fallback": True
+        "priority": "High"
     }]), 200
