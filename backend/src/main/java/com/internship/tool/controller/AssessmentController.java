@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.lang.NonNull;
+
 @RestController
 @RequestMapping("/assessments")
 public class AssessmentController {
@@ -25,13 +27,13 @@ public class AssessmentController {
     }
 
     @GetMapping("/{id}")
-    public Assessment getAssessmentById(@PathVariable Long id) {
+    public Assessment getAssessmentById(@PathVariable @NonNull Long id) {
         return service.getAssessmentById(id);
     }
 
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public Assessment create(@Valid @RequestBody Assessment assessment) {
+    public Assessment create(@Valid @RequestBody @NonNull Assessment assessment) {
         return service.saveAssessment(assessment);
     }
 }

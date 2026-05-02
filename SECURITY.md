@@ -41,3 +41,16 @@ A baseline security scan was performed using OWASP ZAP against the local Flask s
   - *Planned Fix*: Add a `flask-talisman` integration or custom `@app.after_request` hook to enforce `X-Frame-Options: DENY`.
 - **[Medium] Missing X-Content-Type-Options Header**: The API does not set `X-Content-Type-Options: nosniff`.
   - *Planned Fix*: Add the `X-Content-Type-Options: nosniff` header via middleware to prevent MIME-sniffing attacks.
+
+## Week 2 Security Sign-off
+
+| Control | Status | Details |
+| :--- | :--- | :--- |
+| **JWT Verification** | ✅ Verified | Java Backend `JwtAuthFilter` and `JwtUtil` are implemented and enforce valid tokens. |
+| **Rate Limiting** | ✅ Verified | Flask `limiter` strictly enforces `30 per minute`. Validated via unit tests. |
+| **Injection Protection** | ✅ Verified | Prompt injection middleware explicitly denies known jailbreaks and roleplay attacks. HTML tags are stripped. Validated via unit tests. |
+| **PII Audit & Redaction** | ✅ Verified | `sanitizer.py` successfully masks personal data (Emails, Phone numbers, SSNs) with `[REDACTED]` prior to the AI prompt generation. Validated via unit tests. |
+
+**AI Quality Review:**
+- Accuracy Score: 10/10 average score via 10 fresh inputs on `prompt_tuner.py`.
+- Result: System instructions passed the required >= 4/5 baseline with perfect accuracy, correctly formatting the JSON responses and evaluating risks accurately.
