@@ -1,7 +1,11 @@
 .env
-__pycache__/
-*.pyc
+target/
+backend/target/
 node_modules/
-.venv/
-env/
-venv/
+__pycache__/
+chroma_data/
+*.class
+*.jar
+.idea/
+.vscode/
+*.log
