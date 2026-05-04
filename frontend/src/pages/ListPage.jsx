@@ -7,58 +7,77 @@ import AssessmentTable from '../components/AssessmentTable';
 import LoadingSpinner from '../components/LoadingSpinner';
 import EmptyState from '../components/EmptyState';
 import Pagination from '../components/Pagination';
+import SearchFilterBar from '../components/SearchFilterBar';
 
 export default function ListPage() {
-  const [assessments, setAssessments] = useState([]);
-  const [loading, setLoading]         = useState(true);
-  const [error, setError]             = useState('');
-  const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages]   = useState(0);
-  const [totalElements, setTotalElements] = useState(0);
-  const navigate                      = useNavigate();
-  const { user, logout }              = useAuth();
+  const [assessments, setAssessments]         = useState([]);
+  const [loading, setLoading]                 = useState(true);
+  const [error, setError]                     = useState('');
+  const [currentPage, setCurrentPage]         = useState(0);
+  const [totalPages, setTotalPages]           = useState(0);
+  const [totalElements, setTotalElements]     = useState(0);
+  const [searchParams, setSearchParams]       = useState({
+    query: '', status: '', dateFrom: '', dateTo: ''
+  });
+  const navigate         = useNavigate();
+  const { user, logout } = useAuth();
 
   useEffect(() => {
-    fetchAssessments(currentPage);
-  }, [currentPage]);
+    fetchAssessments(currentPage, searchParams);
+  }, [currentPage, searchParams]);
 
-  const fetchAssessments = async (page) => {
+  const fetchAssessments = async (page, params) => {
     setLoading(true);
     setError('');
     try {
-      const response = await assessmentApi.getAll(page, 10);
-      setAssessments(response.data.content || []);
-      setTotalPages(response.data.totalPages || 0);
+      let response;
+      if (params.query || params.status) {
+        response = await assessmentApi.search(
+          params.query, params.status, page
+        );
+      } else {
+        response = await assessmentApi.getAll(page, 10);
+      }
+      setAssessments(response.data.content   || []);
+      setTotalPages(response.data.totalPages  || 0);
       setTotalElements(response.data.totalElements || 0);
     } catch (err) {
       if (err.response?.status === 401) {
         logout();
         navigate('/login');
       } else {
-        setError('Backend not connected yet. Start Spring Boot to see data.');
+        setError('Backend not connected yet.');
       }
     } finally {
       setLoading(false);
     }
   };
 
-  const handleView = (id) => {
-    navigate(`/assessments/${id}`);
+  const handleSearch = (params) => {
+    setSearchParams(params);
+    setCurrentPage(0);
   };
 
-  const handleCreate = () => {
-    navigate('/assessments/create');
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate('/login');
+  const handleExportCsv = async () => {
+    try {
+      const response = await assessmentApi.exportCsv();
+      const url  = window.URL.createObjectURL(
+        new Blob([response.data])
+      );
+      const link = document.createElement('a');
+      link.href  = url;
+      link.setAttribute('download', 'assessments.csv');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (err) {
+      alert('Export failed. Backend not running.');
+    }
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
-
-      {/* Navigation Bar */}
+      {/* Navbar */}
       <nav className="bg-blue-800 text-white px-6 py-4 shadow">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <h1 className="text-xl font-bold">
@@ -69,13 +88,25 @@ export default function ListPage() {
               Welcome, {user?.username || 'User'}
             </span>
             <button
-              onClick={handleCreate}
-              className="bg-white text-blue-800 px-4 py-2 rounded font-semibold text-sm hover:bg-gray-100"
+              onClick={() => navigate('/')}
+              className="text-blue-200 hover:text-white text-sm"
             >
-              + New Assessment
+              Dashboard
             </button>
             <button
-              onClick={handleLogout}
+              onClick={handleExportCsv}
+              className="text-blue-200 hover:text-white text-sm"
+            >
+              Export CSV
+            </button>
+            <button
+              onClick={() => navigate('/assessments/create')}
+              className="bg-white text-blue-800 px-4 py-2 rounded font-semibold text-sm hover:bg-gray-100"
+            >
+              + New
+            </button>
+            <button
+              onClick={() => { logout(); navigate('/login'); }}
               className="text-blue-200 hover:text-white text-sm"
             >
               Logout
@@ -84,7 +115,6 @@ export default function ListPage() {
         </div>
       </nav>
 
-      {/* Main Content */}
       <div className="max-w-7xl mx-auto px-6 py-8">
 
         {/* Page Header */}
@@ -95,18 +125,21 @@ export default function ListPage() {
             </h2>
             {!loading && totalElements > 0 && (
               <p className="text-sm text-gray-500 mt-1">
-                {totalElements} total records
+                {totalElements} records found
               </p>
             )}
           </div>
         </div>
 
-        {/* Error State */}
+        {/* Search Filter Bar */}
+        <SearchFilterBar onSearch={handleSearch} />
+
+        {/* Error */}
         {error && (
           <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded mb-6 text-sm">
             ⚠️ {error}
             <button
-              onClick={() => fetchAssessments(currentPage)}
+              onClick={() => fetchAssessments(currentPage, searchParams)}
               className="ml-4 underline font-medium"
             >
               Retry
@@ -114,23 +147,23 @@ export default function ListPage() {
           </div>
         )}
 
-        {/* Loading State */}
+        {/* Loading */}
         {loading && <LoadingSpinner />}
 
-        {/* Empty State */}
+        {/* Empty */}
         {!loading && !error && assessments.length === 0 && (
           <EmptyState
-            message="No assessments found. Create your first one!"
-            onAdd={handleCreate}
+            message="No assessments found."
+            onAdd={() => navigate('/assessments/create')}
           />
         )}
 
-        {/* Data Table */}
+        {/* Table */}
         {!loading && assessments.length > 0 && (
           <>
             <AssessmentTable
               assessments={assessments}
-              onView={handleView}
+              onView={id => navigate(`/assessments/${id}`)}
             />
             <Pagination
               currentPage={currentPage}
