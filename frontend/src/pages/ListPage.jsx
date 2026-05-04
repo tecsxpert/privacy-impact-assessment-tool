@@ -8,6 +8,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import EmptyState from '../components/EmptyState';
 import Pagination from '../components/Pagination';
 import SearchFilterBar from '../components/SearchFilterBar';
+import Navbar from '../components/Navbar';
 
 export default function ListPage() {
   const [assessments, setAssessments]         = useState([]);
@@ -78,7 +79,7 @@ export default function ListPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
-      <nav className="bg-blue-800 text-white px-6 py-4 shadow">
+      <Navbar className="bg-blue-800 text-white px-6 py-4 shadow">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <h1 className="text-xl font-bold">
             Privacy Impact Assessment Tool
@@ -113,7 +114,7 @@ export default function ListPage() {
             </button>
           </div>
         </div>
-      </nav>
+      </Navbar>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
 
