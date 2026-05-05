@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { assessmentApi } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import Navbar from '../components/Navbar';
 import {
   BarChart, Bar, XAxis, YAxis,
   CartesianGrid, Tooltip, ResponsiveContainer
@@ -78,7 +79,7 @@ export default function DashboardPage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navbar */}
-      <nav className="bg-blue-800 text-white px-6 py-4 shadow">
+      <Navbar className="bg-blue-800 text-white px-6 py-4 shadow">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <h1 className="text-xl font-bold">Privacy Impact Assessment Tool</h1>
           <div className="flex gap-4 items-center">
@@ -102,7 +103,7 @@ export default function DashboardPage() {
             </button>
           </div>
         </div>
-      </nav>
+      </Navbar>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h2>
