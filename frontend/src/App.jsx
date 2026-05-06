@@ -1,4 +1,3 @@
-// src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -14,44 +13,27 @@ function App() {
     <AuthProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public */}
           <Route path="/login" element={<LoginPage />} />
-
-          {/* Protected */}
           <Route path="/" element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
+            <ProtectedRoute><DashboardPage /></ProtectedRoute>
           } />
           <Route path="/dashboard" element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
+            <ProtectedRoute><DashboardPage /></ProtectedRoute>
           } />
           <Route path="/assessments" element={
-            <ProtectedRoute>
-              <ListPage />
-            </ProtectedRoute>
+            <ProtectedRoute><ListPage /></ProtectedRoute>
           } />
           <Route path="/assessments/create" element={
-            <ProtectedRoute>
-              <CreateEditPage />
-            </ProtectedRoute>
+            <ProtectedRoute><CreateEditPage /></ProtectedRoute>
           } />
           <Route path="/assessments/edit/:id" element={
-            <ProtectedRoute>
-              <CreateEditPage />
-            </ProtectedRoute>
+            <ProtectedRoute><CreateEditPage /></ProtectedRoute>
           } />
           <Route path="/assessments/:id" element={
-            <ProtectedRoute>
-              <DetailPage />
-            </ProtectedRoute>
+            <ProtectedRoute><DetailPage /></ProtectedRoute>
           } />
           <Route path="/analytics" element={
-            <ProtectedRoute>
-              <AnalyticsPage />
-            </ProtectedRoute>
+            <ProtectedRoute><AnalyticsPage /></ProtectedRoute>
           } />
         </Routes>
       </BrowserRouter>
