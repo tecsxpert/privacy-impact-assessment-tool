@@ -1,0 +1,44 @@
+Day 19 — Demo Rehearsal Notes
+================================
+Developer: Bhavani R B
+Date: May 8, 2026
+
+MY DEMO SEGMENT (2 minutes):
+==============================
+
+Opening (15 seconds):
+"I am Bhavani, Java Developer 2.
+I built the complete React frontend
+and backend data layer."
+
+Dashboard Demo (30 seconds):
+- Show 4 KPI cards
+- Point to Recharts bar chart
+- "These pull live data from PostgreSQL
+   via Spring Boot REST API on port 8080"
+
+Search Demo (30 seconds):
+- Type in search box slowly
+- "Notice the 400ms debounce —
+   prevents API spam"
+- Select status filter
+- Click Export CSV
+
+Security Demo (30 seconds):
+- Call API without token
+- Show 401 response
+- "Spring Security protects all endpoints"
+- Reference SECURITY.md
+
+Closing (15 seconds):
+"10 MockMvc tests pass.
+Swagger documents every endpoint.
+Full stack starts with docker-compose up."
+
+REHEARSAL CHECKLIST:
+====================
+✅ Know my 2 minute script
+✅ Demo scenarios ready
+✅ SECURITY.md printed
+✅ Backup screenshots ready
+✅ docker-compose up tested
