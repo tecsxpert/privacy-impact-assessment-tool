@@ -1,0 +1,72 @@
+DEMO DAY SCENARIOS — Java Developer 2
+=======================================
+Developer: Bhavani Rajshekhar Bhavanur
+Date: May 9, 2026
+
+SCENARIO 1 — Dashboard KPIs
+==============================
+Steps:
+1. Open http://localhost/dashboard
+2. Show 4 KPI cards:
+   - Total Assessments
+   - High Risk count
+   - Average Score
+   - Pending Reviews
+3. Point to Recharts bar chart
+4. Say: "These cards pull live data
+         from our PostgreSQL database
+         via Spring Boot REST API"
+
+Expected Output:
+- 4 colored KPI cards visible
+- Bar chart showing data
+
+SCENARIO 2 — Search and Filter
+================================
+Steps:
+1. Click Assessments in navbar
+2. Type slowly in search box
+3. Say: "Notice it waits 400ms
+         before calling API —
+         this is debounce to avoid
+         hammering the server"
+4. Select status from dropdown
+5. Click Export CSV button
+
+Expected Output:
+- Results filter as you type
+- CSV file downloads
+
+SCENARIO 3 — Security Demo
+============================
+Steps:
+1. Open Postman or browser
+2. Call API without token:
+   GET http://localhost:8080/api/assessments/all
+3. Show 401 Unauthorized response
+4. Say: "Without JWT token
+         all endpoints return 401.
+         Spring Security protects
+         every route."
+
+Expected Output:
+- 401 Unauthorized response
+- Shows security working
+
+TALKING POINTS:
+===============
+Q: What does it do?
+A: Privacy Impact Assessment Tool helps
+   organizations evaluate how their
+   projects handle personal data.
+
+Q: What AI is used?
+A: Groq API with LLaMA-3.3-70b model
+   via Flask microservice on port 5000.
+   It describes assessments, recommends
+   actions and generates reports.
+
+Q: What security measures?
+A: JWT authentication, Spring Security,
+   rate limiting, input sanitization,
+   SQL injection protection.
