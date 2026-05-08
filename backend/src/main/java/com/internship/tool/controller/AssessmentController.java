@@ -1,14 +1,17 @@
-// backend/src/main/java/com/internship/tool/controller/AssessmentController.java
 package com.internship.tool.controller;
 
 import com.internship.tool.dto.*;
+import com.internship.tool.entity.Assessment;
 import com.internship.tool.service.AssessmentService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import org.springframework.lang.NonNull;
 
 @RestController
 @RequestMapping("/api/assessments")
@@ -21,7 +24,17 @@ public class AssessmentController {
         this.assessmentService = assessmentService;
     }
 
-    // ── Java Developer 1 Endpoints ──────────────────────────
+    @GetMapping("/all")
+    public Page<Assessment> getAllAssessments(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        return assessmentService.getAllAssessments(PageRequest.of(page, size));
+    }
+
+    @GetMapping("/{id}")
+    public Assessment getAssessmentById(@PathVariable @NonNull Long id) {
+        return assessmentService.getAssessmentById(id);
+    }
 
     @PostMapping
     public ResponseEntity<AssessmentResponse> create(

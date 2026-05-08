@@ -14,7 +14,9 @@ import java.util.HashMap;
 public class AiServiceClient {
 
     private final RestTemplate restTemplate;
-    private final String AI_SERVICE_URL = "http://localhost:5000";
+    private final String AI_SERVICE_URL = System.getenv("AI_SERVICE_URL") != null 
+        ? System.getenv("AI_SERVICE_URL") 
+        : "http://localhost:5000";
 
     public AiServiceClient() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();

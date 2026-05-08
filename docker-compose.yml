@@ -1,0 +1,55 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: pia_user
+      POSTGRES_PASSWORD: pia_password
+      POSTGRES_DB: pia_db
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pia_user -d pia_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  ai-service:
+    build: ./ai-service
+    environment:
+      - GROQ_API_KEY=${GROQ_API_KEY}
+    ports:
+      - "5000:5000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  backend:
+    build: ./backend
+    depends_on:
+      db:
+        condition: service_healthy
+      ai-service:
+        condition: service_healthy
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/pia_db
+      - SPRING_DATASOURCE_USERNAME=pia_user
+      - SPRING_DATASOURCE_PASSWORD=pia_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+      - SPRING_DATA_REDIS_HOST=redis
+      - AI_SERVICE_URL=http://ai-service:5000
+    ports:
+      - "8081:8081"
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend

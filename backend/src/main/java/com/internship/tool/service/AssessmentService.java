@@ -3,6 +3,8 @@ package com.internship.tool.service;
 import com.internship.tool.dto.*;
 import com.internship.tool.entity.Assessment;
 import com.internship.tool.repository.AssessmentRepository;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.lang.NonNull;
 
 @Service
 public class AssessmentService {
@@ -26,6 +30,18 @@ public class AssessmentService {
         this.objectMapper = new ObjectMapper();
     }
 
+    @Cacheable("assessments")
+    public Page<Assessment> getAllAssessments(@NonNull Pageable pageable) {
+        return assessmentRepository.findAll(pageable);
+    }
+
+    @Cacheable(value = "assessment", key = "#id")
+    public Assessment getAssessmentById(@NonNull Long id) {
+        return assessmentRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Assessment not found"));
+    }
+
+    @CacheEvict(value = {"assessments", "assessment"}, allEntries = true)
     public AssessmentResponse create(CreateAssessmentRequest request) {
         Assessment assessment = new Assessment();
         assessment.setProjectName(request.getProjectName());
@@ -89,6 +105,7 @@ public class AssessmentService {
             System.err.println("Error during async AI evaluation: " + e.getMessage());
         }
     }
+
 
     public AssessmentResponse update(Long id, UpdateAssessmentRequest request) {
         AssessmentResponse response = new AssessmentResponse();

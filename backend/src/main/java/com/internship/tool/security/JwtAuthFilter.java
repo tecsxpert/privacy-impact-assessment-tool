@@ -11,6 +11,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
+import org.springframework.lang.NonNull;
+
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
@@ -18,9 +20,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request,
-                                    HttpServletResponse response,
-                                    FilterChain filterChain)
+    protected void doFilterInternal(@NonNull HttpServletRequest request,
+                                    @NonNull HttpServletResponse response,
+                                    @NonNull FilterChain filterChain)
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");

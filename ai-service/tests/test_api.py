@@ -82,3 +82,25 @@ def test_analyze_invalid_json(client):
     rv = client.post('/analyze', data="Not a valid json", content_type='application/json')
     # Flask normally returns 400 Bad Request when JSON is malformed
     assert rv.status_code == 400
+
+@patch('app.groq_client.call_ai')
+def test_analyze_pii_redaction(mock_call_ai, client):
+    """Test 9: PII Redaction verification."""
+    mock_response = {
+        "choices": [{"message": {"content": '{"project_summary": "Test", "data_collected": ["None"], "privacy_risks": [], "overall_risk_level": "Low", "recommendations": []}'}}]
+    }
+    mock_call_ai.return_value = mock_response
+
+    payload = {"input": "My email is test@example.com and my phone is 123-456-7890."}
+    rv = client.post('/analyze', json=payload)
+    
+    assert rv.status_code == 200
+    json_data = rv.get_json()
+    assert json_data["status"] == "processed"
+    
+    # We check the arguments passed to mock_call_ai to ensure it received the sanitized input
+    args, _ = mock_call_ai.call_args
+    assert "test@example.com" not in args[0]
+    assert "123-456-7890" not in args[0]
+    assert "[REDACTED EMAIL]" in args[0]
+    assert "[REDACTED PHONE]" in args[0]
