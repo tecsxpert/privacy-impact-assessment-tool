@@ -32,7 +32,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String token = authHeader.substring(7);
 
             try {
-                String username = jwtUtil.extractUsername(token);
+                jwtUtil.extractUsername(token);
             } catch (Exception e) {
                 // Token validation failed
             }

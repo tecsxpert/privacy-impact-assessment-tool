@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 
 import java.security.Key;
 import java.util.Date;
-import java.security.Key;
 
 @Component
 public class JwtUtil {

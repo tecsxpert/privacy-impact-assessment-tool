@@ -57,7 +57,9 @@ public class AssessmentService {
                          ", Subjects: " + request.getDataSubjects() + 
                          ", Purpose: " + request.getProcessingPurpose();
 
-        triggerAiEvaluation(assessment.getId(), aiInput);
+        if (assessment.getId() != null) {
+            triggerAiEvaluation(assessment.getId(), aiInput);
+        }
 
         AssessmentResponse response = new AssessmentResponse();
         response.setId(assessment.getId());
@@ -68,7 +70,7 @@ public class AssessmentService {
     }
 
     @Async
-    public void triggerAiEvaluation(Long assessmentId, String aiInput) {
+    public void triggerAiEvaluation(@NonNull Long assessmentId, String aiInput) {
         try {
             // 1. Get Description
             Map<String, Object> describeResult = aiServiceClient.callAiService("/describe", aiInput);
@@ -96,8 +98,10 @@ public class AssessmentService {
                 }
 
                 if (updated) {
-                    assessmentRepository.save(assessment);
-                    System.out.println("Async AI evaluation completed and saved for Assessment ID: " + assessmentId);
+                    if (assessment != null) {
+                        assessmentRepository.save(assessment);
+                        System.out.println("Async AI evaluation completed and saved for Assessment ID: " + assessmentId);
+                    }
                 }
             });
 
