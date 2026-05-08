@@ -1,0 +1,762 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PIA AI Demo Dashboard</title>
+        <style>
+            :root {
+                --primary: #6366f1;
+                --bg: #0f172a;
+                --card-bg: #1e293b;
+                --text: #f8fafc;
+                --text-dim: #94a3b8;
+                --border: #334155;
+            }
+            body {
+                font-family: 'Inter', sans-serif;
+                background: var(--bg);
+                color: var(--text);
+                margin: 0;
+                padding: 40px;
+            }
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            header {
+                margin-bottom: 40px;
+                text-align: center;
+            }
+            h1 {
+                font-size: 2.5rem;
+                margin-bottom: 10px;
+                background: linear-gradient(to right, #818cf8, #c084fc);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .stats {
+                display: flex;
+                gap: 20px;
+                justify-content: center;
+                margin-bottom: 40px;
+            }
+            .stat-card {
+                background: var(--card-bg);
+                padding: 20px;
+                border-radius: 12px;
+                border: 1px solid var(--border);
+                min-width: 150px;
+            }
+            .stat-value {
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--primary);
+            }
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+                gap: 25px;
+            }
+            .card {
+                background: var(--card-bg);
+                border-radius: 16px;
+                border: 1px solid var(--border);
+                padding: 24px;
+                transition: transform 0.2s;
+                display: flex;
+                flex-direction: column;
+            }
+            .card:hover {
+                transform: translateY(-5px);
+                border-color: var(--primary);
+            }
+            .badge {
+                display: inline-block;
+                padding: 4px 12px;
+                border-radius: 20px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                margin-bottom: 12px;
+            }
+            .badge-describe { background: #0369a1; color: #bae6fd; }
+            .badge-recommend { background: #047857; color: #dcfce7; }
+            .badge-report { background: #7e22ce; color: #f3e8ff; }
+            .input-text {
+                font-style: italic;
+                color: var(--text-dim);
+                margin-bottom: 20px;
+                border-left: 3px solid var(--primary);
+                padding-left: 15px;
+                font-size: 0.95rem;
+            }
+            .output {
+                background: #0f172a;
+                padding: 15px;
+                border-radius: 8px;
+                font-family: 'Fira Code', monospace;
+                font-size: 0.85rem;
+                overflow-x: auto;
+                flex-grow: 1;
+            }
+            pre { margin: 0; white-space: pre-wrap; }
+            .fallback-tag {
+                color: #fbbf24;
+                font-weight: bold;
+                font-size: 0.8rem;
+                margin-top: 10px;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <h1>PIA AI Demo Results</h1>
+                <p style="color: var(--text-dim)">Automated Privacy Impact Assessment Analysis for 30 Diverse Scenarios</p>
+            </header>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-label">Total Records</div>
+                    <div class="stat-value">30</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Success Rate</div>
+                    <div class="stat-value">100%</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Avg Latency</div>
+                    <div class="stat-value">254.6ms</div>
+                </div>
+            </div>
+
+            <div class="grid">
+    
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A smart doorbell that uses facial recognition to identify visitors and stores videos in the cloud."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:32:57.003151+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"An employee monitoring system that tracks keystrokes and active hours for remote workers."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A healthcare app that shares patient data with insurance companies for premium calculations."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:32:57.490481+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A loyalty program that tracks customer purchases and sells anonymized data to third-party advertisers."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:32:57.741676+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A children's educational game that collects voice recordings for 'AI-powered' feedback."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A ride-sharing app that requires continuous background location access for 'safety features'."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:32:58.267306+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A web-based recruitment tool that uses AI to screen resumes and rank candidates based on LinkedIn profiles."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:32:58.511095+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A financial app that links to user bank accounts to provide budgeting advice via Plaid."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A public transit app that uses Bluetooth beacons to track passenger movement across the city."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:32:59.020711+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A smart thermostat that shares energy usage data with utility companies to optimize the grid."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:32:59.270947+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A drone-based delivery service that captures high-resolution imagery of residential areas."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A social media platform that uses 'emotional analysis' on user posts to suggest mood-based products."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:32:59.766381+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"An e-commerce site that uses browser fingerprinting to track users across multiple devices."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:33:00.035730+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A workplace wellness app that collects DNA data to provide personalized nutrition plans."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A smart city project using license plate recognition cameras to monitor traffic flow."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:33:00.542075+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A dating app that uses genetic compatibility matching based on uploaded health reports."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:33:00.796443+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A grocery store app that uses in-store Wi-Fi tracking to analyze customer shopping paths."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A cloud storage service that scans user files for 'malicious content' and reports to law enforcement."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:33:01.283342+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A virtual reality game that collects eye-tracking and biometric data for 'immersion' improvement."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:33:01.533676+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A smart mattress that monitors sleep patterns and shares data with sleep clinics."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A connected car system that monitors driving behavior and reports to insurance for discounts."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:33:02.022656+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A high-school attendance system using fingerprint scanners for students."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:33:02.271613+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A credit scoring system that uses social media activity to determine loan eligibility."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A smart watch for elderly care that detects falls and automatically calls emergency contacts."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:33:02.765560+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A mobile banking app that uses 'behavioral biometrics' (typing speed, tilt) for authentication."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:33:03.018967+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"A video conferencing tool that records 'engagement scores' for participants based on facial expressions."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A fitness tracker that shares user 'step goals' on a public leaderboard by default."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:33:03.510600+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-describe">/DESCRIBE</span>
+                    <div class="input-text">"A subscription service that uses 'dark patterns' to make it difficult for users to delete their data."</div>
+                    <div class="output">
+                        <pre>{
+  "data_collected": [
+    "Unable to extract automatically"
+  ],
+  "generated_at": "2026-04-30T16:33:03.759384+00:00",
+  "is_fallback": true,
+  "privacy_risks": [
+    "Manual risk assessment required"
+  ],
+  "risk_level": "Medium",
+  "summary": "AI Assessment temporarily unavailable. Please review manually."
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-recommend">/RECOMMEND</span>
+                    <div class="input-text">"An AI-powered legal assistant that stores client case files in a shared cloud environment."</div>
+                    <div class="output">
+                        <pre>[
+  {
+    "action_type": "Manual Review Required",
+    "description": "AI recommendation engine is temporarily offline. Please assess manually.",
+    "is_fallback": true,
+    "priority": "High"
+  }
+]</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+                <div class="card">
+                    <span class="badge badge-report">/GENERATE-REPORT</span>
+                    <div class="input-text">"A smart fridge that tracks food expiration and automatically orders replacements from Amazon."</div>
+                    <div class="output">
+                        <pre>{
+  "generated_at": "2026-04-30T16:33:04.272092+00:00",
+  "is_fallback": true,
+  "key_items": [
+    "Review data types manually",
+    "Verify retention policies",
+    "Check encryption status"
+  ],
+  "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+  "recommendations": [
+    "Ensure compliance with local privacy laws",
+    "Conduct manual risk assessment",
+    "Verify data residency"
+  ],
+  "status": "fallback",
+  "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
+  "title": "Privacy Impact Assessment Report (Fallback)"
+}</pre>
+                    </div>
+                    <span class="fallback-tag">⚠️ Fallback Active</span>
+                </div>
+        
+            </div>
+        </div>
+    </body>
+    </html>
+    

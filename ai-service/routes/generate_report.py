@@ -5,6 +5,7 @@ import hashlib
 import redis
 from datetime import datetime, timezone
 from flask import Blueprint, request, jsonify
+from services.vector_store import vector_store
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -13,7 +14,7 @@ generate_report_bp = Blueprint('generate_report', __name__)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 REDIS_URL = os.getenv("REDIS_URL", "redis://localhost:6379/0")
 
-redis_client = redis.from_url(REDIS_URL, decode_responses=True)
+redis_client = redis.from_url(REDIS_URL, decode_responses=True, socket_timeout=0.1, socket_connect_timeout=0.1)
 
 
 @generate_report_bp.route('/generate-report', methods=['POST'])
@@ -46,14 +47,24 @@ def generate_report():
 
     # Handle string or dict input gracefully
     input_str = json.dumps(user_input) if isinstance(user_input, dict) else str(user_input)
+    # RAG: Fetch relevant domain knowledge
+    try:
+        results = vector_store.query(input_str, n_results=3)
+        context = "\n".join(results['documents'][0]) if results['documents'] else ""
+    except Exception as e:
+        print(f"Vector store query failed: {e}")
+        context = ""
+
     prompt = prompt_template.replace("{user_input}", input_str)
+    if context:
+        prompt = f"Context from privacy regulations:\n{context}\n\nTask: {prompt}"
 
     if not GROQ_API_KEY:
         return handle_fallback("Missing GROQ_API_KEY environment variable.")
 
     headers = {"Authorization": f"Bearer {GROQ_API_KEY}", "Content-Type": "application/json"}
     payload = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "llama-3.1-8b-instant",
         "messages": [
             {"role": "system", "content": "You are a helpful API that returns strictly valid JSON."},
             {"role": "user", "content": prompt}
@@ -100,9 +111,9 @@ def handle_fallback(error_message):
         "is_fallback": True,
         "title": "Privacy Impact Assessment Report (Fallback)",
         "summary": "The AI service is currently unavailable. Please review the assessment data manually.",
-        "overview": "Fallback report generated due to service interruption.",
-        "key_items": ["Review data types manually", "Verify retention policies"],
-        "recommendations": ["Ensure compliance with local privacy laws", "Conduct manual risk assessment"],
+        "overview": "Fallback report generated due to service interruption. AI optimization fallback active.",
+        "key_items": ["Review data types manually", "Verify retention policies", "Check encryption status"],
+        "recommendations": ["Ensure compliance with local privacy laws", "Conduct manual risk assessment", "Verify data residency"],
         "generated_at": datetime.now(timezone.utc).isoformat(),
-        "status": "partial_success"
+        "status": "fallback"
     }), 200

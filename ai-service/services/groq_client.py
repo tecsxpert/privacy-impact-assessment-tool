@@ -13,7 +13,7 @@ class GroqClient:
         self.api_key = os.getenv("GROQ_API_KEY")
         self.url = "https://api.groq.com/openai/v1/chat/completions"
 
-    def call_ai(self, prompt, model="llama-3.3-70b-versatile", temperature=0.3, max_retries=3):
+    def call_ai(self, prompt, model="llama-3.1-8b-instant", temperature=0.3, max_retries=3):
         headers = {
             "Authorization": f"Bearer {self.api_key}",
             "Content-Type": "application/json"

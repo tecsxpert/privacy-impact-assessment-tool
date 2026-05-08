@@ -28,7 +28,7 @@ def health():
 
     return jsonify({
         "status": "healthy",
-        "model": "llama-3.3-70b-versatile",
+        "model": "llama-3.1-8b-instant",
         "uptime_seconds": round(uptime_seconds, 2),
         "avg_response_time_ms": round(avg_response_time * 1000, 2),
         "redis_status": redis_status

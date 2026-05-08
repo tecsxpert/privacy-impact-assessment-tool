@@ -36,13 +36,15 @@ public class AssessmentController {
         return assessmentService.getAssessmentById(id);
     }
 
-    @PostMapping("/create")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Assessment create(@Valid @RequestBody @NonNull Assessment assessment) {
-        return assessmentService.saveAssessment(assessment);
+    @PostMapping
+    public ResponseEntity<AssessmentResponse> create(
+            @Valid @RequestBody CreateAssessmentRequest request) {
+        AssessmentResponse response = assessmentService.create(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     // ── Java Developer 2 Endpoints ──────────────────────────
+
 
     // PUT /{id} — Update assessment
     @PutMapping("/{id}")

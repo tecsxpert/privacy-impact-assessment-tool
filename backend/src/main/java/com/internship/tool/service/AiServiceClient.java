@@ -41,8 +41,29 @@ public class AiServiceClient {
             ResponseEntity<Map> response = restTemplate.postForEntity(url, entity, Map.class);
             return (response != null) ? (Map<String, Object>) response.getBody() : null;
         } catch (Exception e) {
-            System.err.println("AI Service Error: " + e.getMessage());
+            System.err.println("AI Service Error (Map): " + e.getMessage());
             return null; // Null return on error (Day 4)
+        }
+    }
+
+    @SuppressWarnings({"rawtypes", "unchecked"})
+    public java.util.List<Map<String, Object>> callAiServiceForList(String endpoint, String input) {
+        String url = AI_SERVICE_URL + endpoint;
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        Map<String, String> body = new HashMap<>();
+        body.put("input", input);
+
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
+
+        try {
+            ResponseEntity<java.util.List> response = restTemplate.postForEntity(url, entity, java.util.List.class);
+            return (response != null) ? (java.util.List<Map<String, Object>>) response.getBody() : null;
+        } catch (Exception e) {
+            System.err.println("AI Service Error (List): " + e.getMessage());
+            return null; // Null return on error
         }
     }
 }

@@ -3,3 +3,7 @@ python-dotenv==1.0.0
 requests==2.31.0
 flask-limiter==3.5.0
 bleach==6.1.0
+sentence-transformers==5.4.1
+torch==2.11.0
+chromadb==0.4.15
+redis==5.0.1
